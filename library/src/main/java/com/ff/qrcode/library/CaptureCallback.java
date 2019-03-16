@@ -13,15 +13,31 @@ import com.google.zxing.Result;
  */
 public interface CaptureCallback {
 
-    Rect getCropRect();
+    Rect getCropRect();// 获取矩形
 
-    Handler getHandler();
+    Handler getHandler();// 获取Handler
 
-    CameraManager getCameraManager();
+    CameraManager getCameraManager();// 获取CameraManager
 
+    /**
+     * 扫码成功之后回调的方法
+     *
+     * @param result
+     * @param bundle
+     */
     void handleDecode(Result result, Bundle bundle);
 
-    void setResult(int resultCode, Intent intent);
+    /**
+     * {@link android.app.Activity#setResult(int, Intent)}
+     *
+     * @param resultCode The result code to propagate back to the originating
+     *                   activity, often RESULT_CANCELED or RESULT_OK
+     * @param data       The data to propagate back to the originating activity.
+     */
+    void setResult(int resultCode, Intent data);
 
+    /**
+     * {@link android.app.Activity#finish()}
+     */
     void finish();
 }

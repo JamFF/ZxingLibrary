@@ -59,7 +59,7 @@ public class Utils {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                activity.finish();
+                setResultAndFinish(activity, Activity.RESULT_CANCELED, null);
             }
 
         });
@@ -67,10 +67,15 @@ public class Utils {
 
             @Override
             public void onCancel(DialogInterface dialog) {
-                activity.finish();
+                setResultAndFinish(activity, Activity.RESULT_CANCELED, null);
             }
         });
         builder.show();
+    }
+
+    public static void setResultAndFinish(Activity activity, int resultCode, Intent data) {
+        activity.setResult(resultCode, data);
+        activity.finish();
     }
 
     // 获取状态栏高度
@@ -90,6 +95,9 @@ public class Utils {
     // 打开闪光灯
     public static void openFlashlight(CameraManager cameraManager) {
         camera = cameraManager.getCamera();
+        if (camera == null) {
+            return;
+        }
         Camera.Parameters parameters = camera.getParameters();
         parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         camera.setParameters(parameters);
@@ -98,6 +106,9 @@ public class Utils {
 
     // 关闭闪光灯
     public static void closeFlashlight() {
+        if (camera == null) {
+            return;
+        }
         Camera.Parameters parameters = camera.getParameters();
         parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
         camera.setParameters(parameters);

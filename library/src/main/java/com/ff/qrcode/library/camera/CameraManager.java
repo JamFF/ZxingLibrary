@@ -17,7 +17,6 @@
 package com.ff.qrcode.library.camera;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
@@ -54,8 +53,6 @@ public class CameraManager {
      * message.
      */
     private final PreviewCallback previewCallback;
-
-    public static boolean IS_OPEN_LIGHT = false; //是否开启闪光灯
 
     public Camera getCamera() {
         return camera;
@@ -207,40 +204,5 @@ public class CameraManager {
             return camera.getParameters().getPreviewSize();
         }
         return null;
-    }
-
-    /**
-     * 开启闪关灯
-     */
-    public void enableFlash() {
-        try {
-            if (camera != null && context.getPackageManager().hasSystemFeature(
-                    PackageManager.FEATURE_CAMERA_FLASH)) {
-                Camera.Parameters p = camera.getParameters();
-                p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                camera.setParameters(p);
-                IS_OPEN_LIGHT = true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 关闭闪光灯
-     */
-    public void disableFlash() {
-
-        try {
-            if (camera != null && context.getPackageManager().hasSystemFeature(
-                    PackageManager.FEATURE_CAMERA_FLASH)) {
-                Camera.Parameters p = camera.getParameters();
-                p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                camera.setParameters(p);
-                IS_OPEN_LIGHT = false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
